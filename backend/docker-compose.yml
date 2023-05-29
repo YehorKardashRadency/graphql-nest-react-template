@@ -1,0 +1,18 @@
+version: '2'
+services:
+  postgresqldb:
+    image: postgres
+    container_name: graphql-database
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      # - POSTGRES_DB=graphql-database
+      - POSTGRES_MULTIPLE_DATABASES=users_database,posts_database
+    volumes:
+      - ./scripts/pg-init-scripts:/docker-entrypoint-initdb.d
+      - db:/var/lib/postgresql/data
+volumes:
+  db:
+    external: false
